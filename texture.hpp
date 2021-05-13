@@ -5,6 +5,7 @@
 #ifndef RTTNW_TEXTURE_HPP
 #define RTTNW_TEXTURE_HPP
 
+#include "perlin.hpp"
 #include "rtweekend.hpp"
 
 class texture {
@@ -25,6 +26,18 @@ public:
 
 private:
     color color_value;
+};
+
+class noise_texture : public texture {
+public:
+    noise_texture() {}
+
+    virtual color value(double u, double v, const point3& p) const override {
+        return color(1, 1, 1) * noise.noise(p);
+    }
+
+public:
+    perlin noise;
 };
 
 #endif //RTTNW_TEXTURE_HPP
