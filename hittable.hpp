@@ -119,7 +119,7 @@ bool rotate_y::hit(const ray& r, double t_min, double t_max, hit_record& rec) co
     auto direction = r.direction();
 
     origin[0] = cos_theta*r.origin()[0] - sin_theta*r.origin()[2];
-    origin[2] = cos_theta*r.origin()[0] + cos_theta*r.origin()[2];
+    origin[2] = sin_theta*r.origin()[0] + cos_theta*r.origin()[2];
 
     direction[0] = cos_theta*r.direction()[0] - sin_theta*r.direction()[2];
     direction[2] = sin_theta*r.direction()[0] + cos_theta*r.direction()[2];
@@ -131,8 +131,11 @@ bool rotate_y::hit(const ray& r, double t_min, double t_max, hit_record& rec) co
     auto p = rec.p;
     auto normal = rec.normal;
 
-    p[0] = cos_theta*rec.p[0] + sin_theta*rec.normal[2];
-    p[2] = -sin_theta*rec.p[0] + cos_theta*rec.normal[2];
+    p[0] = cos_theta*rec.p[0] + sin_theta*rec.p[2];
+    p[2] = -sin_theta*rec.p[0] + cos_theta*rec.p[2];
+
+    normal[0] = cos_theta*rec.normal[0] + sin_theta*rec.normal[2];
+    normal[2] = -sin_theta*rec.normal[0] + cos_theta*rec.normal[2];
 
     rec.p = p;
     rec.set_face_normal(rotated_r, normal);
